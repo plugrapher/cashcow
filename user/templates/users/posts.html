@@ -1,0 +1,59 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="main-container">
+	<h1>Posts</h1>
+	{% if request.user.is_staff %}
+		<a class="btn btn-warning" href="{% url 'create_post' %}">Create Post</a>
+	{% endif %}
+	<form id="searchForm" method="GET">
+		{{myFilter.form|crispy}}
+		
+		<input class="btn btn-primary" type="submit" value="search">
+	</form>
+	<br>
+	<div class="post-wrapper">
+
+		{% for post in post %}
+		<div>
+			<div class="post">
+				<img class="thumbnail" src="{{post.thumbnail.url}}">
+				<div class="post-preview">
+					<h6 class="post-title">{{post.jname}}</h6>
+					<p class="post-intro">{{post.jnumber}}</p>
+					<a href="{% url 'post' %}">Read More</a>
+
+					{% if request.user.is_staff %}
+						| <a href="{% url 'update_post'%}">Edit</a>
+						| <a href="{% url 'delete_post'%}">Delete</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% empty %}
+			<h3>No posts found...</h3>
+		{% endfor %}
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	let searchForm = document.getElementById('searchForm')
+	let pageLinks = document.getElementsByClassName('page-link')
+
+	for(var i=0; pageLinks.length > i; i++){
+
+		pageLinks[i].addEventListener('click', function(e){
+			e.preventDefault()
+			let page = this.dataset.page
+			console.log('Page:', page)
+			searchForm.innerHTML += `<input value="${page}" name="page" hidden >`
+			searchForm.submit()
+		})
+
+	}
+</script>
+
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% load static %}
+{% block content %}
+
+<div class="main-container">
+	<form action="{% url 'delete_post' post.id %}" method="post">
+		{% csrf_token %}
+
+		<p>Are you sure you want to delete {{post}}?</p>
+		<a class="btn btn-primary" href="{% url 'job-list' %}">&laquo Back to Posts</a>
+		<input class="btn btn-danger" type="submit" value="Confirm">
+	</form>
+</div>
+
+{% endblock content %}

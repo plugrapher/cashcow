@@ -1,0 +1,24 @@
+{% load static %}
+{% block content %}
+
+<div class="post-container">
+
+	<a class="btn btn-sm btn-primary" href="{% url 'job-list' %}">&laquo Back to Jobs</a>
+	<a class="btn btn-primary" href="{% url 'job-list' %}">Buy Now</a>
+
+	{% if request.user.is_staff %}
+		 <a class="btn btn-sm btn-primary" href="{% url 'update_post'  %}">Edit</a>
+		 <a class="btn btn-sm btn-danger" href="{% url 'delete_post'  %}">Delete</a>
+	{% endif %}
+
+	<hr>
+
+	<h1>{{post.jobtitle}}</h1>
+	<h4>{{post.sub_title}}</h4>
+	<br>
+
+	<p>{{post.body|safe}}</p>
+
+</div>
+
+{% endblock content %}
