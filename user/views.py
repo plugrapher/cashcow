@@ -18,6 +18,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import get_object_or_404, redirect, render
 
+from django.core.paginator import Paginator
 
 def home(request):
     model = Post    
@@ -65,26 +66,25 @@ def createPost(request):
 
 @login_required
 def job_list(request):
-
-    model = Post
-    def get_queryset(self): # new
-        return Post.objects.filter(
-            Q(cname__icontains="q") | Q(l__icontains="q")
-        )
+    queryset = Post.objects.all()  # Get all posts
+    paginator = Paginator(queryset, 10)  # Show 10 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    post = Post.objects.all()
 
     if 'q' in request.GET:
         q = request.GET['q']
-        post = Post.objects.filter(cname__icontains=q)
-        post = Post.objects.filter(lname__icontains=q)
-        multiple_q = q(q(cname__icontains=q)|q(lname__icontains=q))
-        post = Post.objects.filter(q)
-    else:
-        post = Post.objects.all()
+        queryset = queryset.filter(
+            Q(cname__icontains=q) | Q(l__icontains=q)
+        )
+
     context = {
+        'page_obj': page_obj,
+        'queryset': queryset,
         'post': post
+
     }
-    return render(request, 'users/job-list.html' , context )
-   
+    return render(request, "users/job-list.html", context)
     
 def contact(request, post_id):
     
@@ -105,6 +105,48 @@ def category(request):
         'jobs': jobs
     }
     return render(request, 'users/category.html', context)
+
+
+
+
+
+
+def category(request):
+    if 'q' in request.GET:
+        q = request.GET['q']
+        jobs = Jobs.objects.filter(cname__icontains=q)
+    else:
+        jobs = Jobs.objects.all()
+
+    # Bitcoin address
+    bitcoin_address = "3EJ7ETzxeU4r7zviNUT6LxwkgLLiMQEvJq"
+
+    # Generate QR code for Bitcoin address
+   # qr = qrcode.QRCode(
+   #     version=1,
+   #     error_correction=qrcode.constants.ERROR_CORRECT_L,
+   #     box_size=10,
+   #     border=4,
+   # )
+   # qr.add_data(bitcoin_address)
+   # qr.make(fit=True)
+   # qr_img = qr.make_image(fill_color="black", back_color="white")
+
+    # Save QR code image to a temporary file
+
+    # Render the template with Bitcoin address and QR code image path
+    context = {
+        'jobs': jobs,
+        'bitcoin_address': bitcoin_address,
+       # 'qr_img_path': qr_img_path,
+    }
+    return render(request, 'users/category.html', context)
+
+
+
+
+
+
 
 def testimonial(request):
     return render(request, 'users/testimonial.html')
@@ -173,21 +215,22 @@ def Login(request):
     form = AuthenticationForm(request, data=request.POST)
     return render(request, 'users/login.html', {'form':form})
 
+
+
 @login_required(login_url="home")
+
 def updateProfile(request):
-	user = request.user
-	profile = user.profile
-	form = ProfileForm(instance=profile)
-	if request.method == 'POST':
-		user_form = UserForm(request.POST, instance=user)
-		if user_form.is_valid():
-			user_form.save()
-		form = ProfileForm(request.POST, instance=profile)
-		if form.is_valid():
-			form.save()
-			return redirect('profile')
-	context = {'form':form}
-	return render(request, 'users/profile_update.html', context)
+    user =request.user
+    profile = request.user
+    form = ProfileForm(instance=profile)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Assuming 'profile' is the URL name for viewing the profile
+    return render(request, 'users/profile_update.html', {'form': form})
+
+
 
 def sendEmail(request):
 	if request.method == 'POST':

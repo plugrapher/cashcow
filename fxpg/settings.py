@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2!nkux=iaf+o0kbmly3gnyz=5xju-y*_%28y64pxn3%oh6#10y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'crispy_bootstrap4',
-    #'ckeditor',
+   # 'cryptocurrency_payment.apps.CryptocurrencyPaymentConfig',
     #'ckeditor_uploader',
     #'django_filters',
     #'storages',
@@ -155,18 +155,25 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = '/'
-LOGIN_REDIRECT_URL ="home"
+LOGIN_REDIRECT_URL ="category"
 
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'dikkymccria@gmail.com'
-EMAIL_HOST_PASSWORD = 'slimedikky1'
-EMAIL_PORT = 587
 EMAIL_FILE_PATH = BASE_DIR / "email"
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+#EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 CKEDITOR_UPLOAD_PATH = 'ckeditor_uploads'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+
+ #SMTP Configure
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Use 'smtp.gmail.com' for Gmail
+EMAIL_PORT = 587
+EMAIL_USE_SSL = False
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'plugrapher@gmail.com'
+EMAIL_HOST_PASSWORD = 'amlixtzbunuefycy'
+DEFAULT_FROM_EMAIL = 'plugrapher@gmail.com'
+
 
 CKEDITOR_CONFIGS = {
     'default': {

@@ -51,57 +51,57 @@
 
  
          <!-- Jobs Start -->
-         <div class="container-xxl py-5">
-             <div class="container">
-                 <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Card Listing</h1>
-                 <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
+         <!-- Jobs Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">Card Listing</h1>
 
-                    <div class="tab-content">
+        <div class="job-item p-4 mb-4">
+            <div class="row g-4">
+                {% for post in page_obj %}
+                <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                    <div class="text-start ps-4">
+                       <h5 class="mb-3">{{ post.jobtitle|slice:":6" }}</h5>
+                       <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ post.location}}</span>
+                       <br>
+                       <span class="text-truncate me-0"><i class="fas fa-university text-primary me-2"></i>{{ post.sub_title}}</span>
+                       <br>
+                       <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$: {{ post.salary}}</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                    <div class="d-flex mb-3">
+                        <a class="btn btn-primary" href="{% url 'category' %}">$ {{ post.qualification }}-Buy </a>
+                    </div>
+                    <!-- Additional job details -->
+                </div>
+                {% empty %}
+                <h3>No Jobs Found...</h3>
+                {% endfor %}
+            </div>
+        </div>
 
-                        <div id="tab-1" class="tab-pane fade show p-0 active">
+        <!-- Pagination -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" class="btn btn-primary">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary">previous</a>
+                {% endif %}
+                <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-primary">Last</a>
+                {% endif %}
+            </span>
+        </div>
 
-                             <div class="job-item p-4 mb-4">
+        <!-- End Pagination -->
 
-                                 <div class="row g-4">
-                                        {% for post in post %}
+    </div>
+</div>
+<!-- Jobs End -->
 
-                                     <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                         <div class="text-start ps-4">
-                                            <h5 class="mb-3">{{ post.jobtitle|slice:":6" }}</h5>
-                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{ post.location}}</span>
-                                            <br>
-                                            <span class="text-truncate me-0"><i class="fas fa-university text-primary me-2"></i>{{ post.sub_title}}</span>
-                                            <br>
-                                            <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>$: {{ post.salary}}</span>
-                                         </div>
-                                     </div>
-
-                                     <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                         <div class="d-flex mb-3">
-                                             <a class="btn btn-primary" href="{% url 'category' %}">$ {{ post.qualification }}-Buy </a>
-
-
-                                         </div>
-                                    <!--     <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: 01 Jan, 2045</small> -->
-
-                                        </div>
-                                        {% empty %}
-                                        <h3>No Jobs Found...</h3>
-
-                                     {% endfor %}
-
-                                   </div>
-
-
-
-                                </div>
-
-                             <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </div>
          <!-- Jobs End -->
  
          <!-- Testimonial Start -->
