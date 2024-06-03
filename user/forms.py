@@ -31,7 +31,8 @@ class UserForm(ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['username', 'email', 'first_name', 'last_name','balance']
+       # fields = ['username', 'email', 'first_name', 'last_name','balance']
+        fields = '__all__'
 
 
 

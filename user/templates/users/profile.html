@@ -75,6 +75,7 @@
 <div class="container profile">
 
     <div class="row">
+
         <div class="col-md-8">
             <div class="profile-tab">
                 <div class="tab-pane">
@@ -96,20 +97,23 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <label>Email:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>{{user.email}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
+
                         <div class="col-md-6">
                             <label>Balance:</label>
                         </div>
+
                         <div class="col-md-6">
-                            <p>{{profile.balance}}</p>
+                            {% if jobs in jobs %}
+
+                            <p>{{jobs.salary}}</p>
+                            {% else %}
+                            <p> $ 0.00 </p>
+                            <a class="btn btn-primary" href="{% url 'category' %}">{{ jobs.qualification }} Top-Up Account </a>
+
+                            {% endif %}
+
                         </div>
+
                     </div>
                 </div>
                <a href="{% url 'profile_update' %}" class="btn btn-primary">Edit Profile</a>  

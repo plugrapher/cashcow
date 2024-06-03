@@ -6,15 +6,14 @@ from django.contrib.auth.models import User
 #from taggit.managers import TaggableManager
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-    username = models.CharField(max_length=200, blank=True, null=True)
-    email = models.CharField(max_length=200)
+   # user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    #username = models.CharField(max_length=200, blank=True, null=True)
+    #email = models.CharField(max_length=200)
     first_name = models.CharField(max_length=200, blank=True, null=True)
     last_name = models.CharField(max_length=200, blank=True, null=True)
     profile_pic = models.ImageField(null=True, blank=True, upload_to="images", default="/user.png")
     twitter = models.CharField(max_length=200,null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
-    balance = models.CharField(max_length=30, blank=True)
 
 
 
@@ -72,8 +71,8 @@ class Post(models.Model):
     qualification = models.TextField( null=True ,blank=True)
     location = models.CharField(max_length=300,  blank=True)
     salary = models.CharField(max_length=30, blank=True)
-    company_name = models.CharField(max_length=300,  blank=True)
-
+    balance = models.CharField(max_length=30, blank=True)
+    
     def __str__(self):
         return self.jobtitle
 
@@ -82,3 +81,5 @@ class Tag(models.Model):
 	name = models.CharField(max_length=200)
 	def __str__(self):
 		return self.name
+
+

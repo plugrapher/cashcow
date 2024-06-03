@@ -172,7 +172,7 @@ EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'plugrapher@gmail.com'
 EMAIL_HOST_PASSWORD = 'amlixtzbunuefycy'
-DEFAULT_FROM_EMAIL = 'plugrapher@gmail.com'
+#DEFAULT_FROM_EMAIL = 'plugrapher@gmail.com'
 
 
 CKEDITOR_CONFIGS = {
@@ -188,3 +188,5 @@ CKEDITOR_CONFIGS = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
