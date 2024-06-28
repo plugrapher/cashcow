@@ -44,7 +44,7 @@ urlpatterns = [
     #####user related path##########################
     path('', include('user.urls')),
     path('login/', user_view.Login, name='login'),
-    path('logout/', auth.LogoutView.as_view(template_name='users/home.html'), name='logout'),
+    path('logout/', auth.LogoutView.as_view(template_name='users/login.html'), name='logout'),
     path('registration/', user_view.registration, name='register'),
 
 ]

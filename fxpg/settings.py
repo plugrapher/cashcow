@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2!nkux=iaf+o0kbmly3gnyz=5xju-y*_%28y64pxn3%oh6#10y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', '192.168.100.14']
 
 
 # Application definition
@@ -155,7 +155,11 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = '/'
-LOGIN_REDIRECT_URL ="category"
+# settings.py
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'  # Or wherever you want to redirect after login
+LOGOUT_REDIRECT_URL = 'login'  # Ensure this is set if using Django's built-in logout view
+
 
 
 EMAIL_FILE_PATH = BASE_DIR / "email"

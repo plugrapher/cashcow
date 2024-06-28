@@ -39,41 +39,62 @@
 {%include 'users/navbar.html'%}
 
 
-        <!-- Header End -->
-        <div class="container-xxl py-15">
-            <div class="container my-2 pt-2 pb-">
 
-                <h1 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">PAYMENT IN BITCOIN </h1>
+<div class="container-xxl py-15 text-center">
+    <div class="container my-2 pt-2 pb-">
 
-<!-- Bitcoin address and QR code content -->
-<div class="row g-8 justify-content-center align-items-center">
-    {% for jobs in jobs %}
-    <div class="col-lg-12 col-sm-8 wow fadeInUp" data-wow-delay="0.1s">
-        <a class="cat-item rounded p-4 text-center">
-            <h4 class="mb-3">BTC WALLET <br> {{ bitcoin_address }}</h4><br>
-            <!-- Display the QR code image -->
-            <img src="{% static 'img/benumb.png' %}" alt="Bitcoin QR Code" style="max-width: 300px; max-height: 300px;">
-        </a>
-        <br>
-        <center>It can take 5-30 min (after 1st confirmation). Exact time depends on payment fee you set.</center>
-        <br>
+        <h1 class="mb-5 wow fadeInUp" data-wow-delay="0.1s">PAYMENT IN BITCOIN </h1>
+
+        <!-- Bitcoin address and QR code content -->
+        <div class="row g-8 justify-content-center align-items-center">
+            <div class="col-lg-12 col-sm-8 wow fadeInUp" data-wow-delay="0.1s">
+                <a class="cat-item rounded p-4 text-center">
+                    <!-- Initially hidden Bitcoin address -->
+                    <h4 id="bitcoin_address" class="mb-3" style="display: none;">BTC WALLET <br> {{ bitcoin_address }}</h4><br>
+                    <!-- Display the QR code image initially hidden -->
+                    <img id="qr_image" src="{% static 'img/benumb.png' %}" alt="Bitcoin QR Code" style="max-width: 300px; max-height: 300px; display: none;">
+                </a>
+                <br>
+                <center>It can take 5-30 min (after 1st confirmation). Exact time depends on payment fee you set.</center>
+                <br>
+
+                <!-- Button to generate new Bitcoin address -->
+                <form id="generate_form" action="{% url 'category' %}" method="get">
+                    <input type="hidden" name="generate" value="true">
+                    <button id="generate_button" type="submit" class="btn btn-primary">Generate Your Bitcoin Address</button>
+                </form>
+            </div>
+        </div>
 
     </div>
-    {% endfor %}
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the form, Bitcoin address, and QR code elements
+    var generateForm = document.getElementById('generate_form');
+    var bitcoinAddress = document.getElementById('bitcoin_address');
+    var qrImage = document.getElementById('qr_image');
+    
+    // Add click event listener to the "Generate New Bitcoin Address" button
+    document.getElementById('generate_button').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent form submission
+        
+        // Submit the form via AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', generateForm.getAttribute('action') + '?generate=true', true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // If successful response, show the Bitcoin address and the QR code image
+                bitcoinAddress.style.display = 'block';
+                qrImage.style.display = 'block';
+            }
+        };
+        xhr.send();
+    });
+});
+</script>
 
-            </div>
-
-        </div>
-        <!-- Header End -->
-
-
-        <!-- Category Start -->
-
-        <!-- Footer Start -->
-
-        <!-- Footer End -->
 
 
         <!-- Back to Top -->

@@ -1,136 +1,97 @@
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
     <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-{% if messages %}
-{% for message in messages %}
-<script>
-    alert("{{ message }}");
-</script>
-
-{% endfor %}
-{% endif %}
-
-
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Profile - Benumb</title>
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                alert("{{ message }}");
+            </script>
+        {% endfor %}
+    {% endif %}
 </head>
 <body>
-<div class="container-xxl bg-white p-0">
-
-<!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
-        <h1 class="m-0 text-primary">Benumb</h1>
-    </a>
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-            
-
-            <a href="{% url 'job-detail' %}" class="nav-item nav-link">MY ORDERS</a>
-
-
-            {% if user.is_authenticated %}
-
-         <!--   <a href="{% url 'category'%}" class="nav-item nav-link">category</a>  -->
-
-            <a href="{% url 'job-list' %}" class="nav-item nav-link">Cards</a>
-            <a href="{% url 'profile' %}" class="nav-item nav-link">Profile</a>
-
-            <a href="{% url 'logout' %}" class="nav-item nav-link">logout</a>
-
-
-            {% else %}
-            <a href="{% url 'login' %}" class="nav-item nav-link">login</a>
-            <a href="{% url 'registration' %}" class="nav-item nav-link">register</a>
-            {% endif %}
-
+    <div class="container-xxl bg-white p-0">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+            <a href="" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+                <h1 class="m-0 text-primary">Benumb</h1>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'job-list' %}" class="nav-item nav-link">Cards</a>
+                        <a href="{% url 'profile' %}" class="nav-item nav-link active">Profile</a>
+                        <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+                        <a href="{% url 'registration' %}" class="nav-item nav-link">Register</a>
+                    {% endif %}
                 </div>
             </div>
+        </nav>
+        <!-- Navbar End -->
 
+        <!-- Profile Section Start -->
+        <div class="container profile py-5">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="profile-tab">
+                        <div class="tab-pane">
+                            <h2 class="mb-4">Profile Details</h2>
+                            <div class="row mb-3">
+                                <div class="col-md-6"><strong>Username:</strong></div>
+                                <div class="col-md-6">{{ user }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6"><strong>Full Name:</strong></div>
+                                <div class="col-md-6">{{ user.get_full_name }}</div>
+                            </div>
+                            <a href="{% url 'profile_update' %}" class="btn btn-primary">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Wallet Balance Section -->
+                <div class="col-lg-4">
+                    <div class="wallet-balance text-center mb-4">
+                        <h4 class="mb-3">Wallet Balance</h4>
+                        {% if btc_to_usd %}
+                        <h2>{{ wallet_balance_btc|floatformat:2 }} BTC ({{ btc_to_usd|floatformat:2 }} USD)</h2>
+                        {% else %}
+                        <p>Unable to fetch BTC price</p>
+                        {% endif %}
+                        <p>Your current wallet balance</p>
+                        <a href="{% url 'testimonial' %}" class="btn btn-primary btn-block">Deposit</a>
+                    </div>
+                    
+            </div>
         </div>
+        <!-- Profile Section End -->
     </div>
 
-
-
-</nav>
-
-<div class="container profile">
-
-    <div class="row">
-
-        <div class="col-md-8">
-            <div class="profile-tab">
-                <div class="tab-pane">
-                    <br><br>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Username:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>{{user}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Full Name:</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>{{user.get_full_name}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="col-md-6">
-                            <label>Balance:</label>
-                        </div>
-
-                        <div class="col-md-6">
-                            {% if jobs in jobs %}
-
-                            <p>{{jobs.salary}}</p>
-                            {% else %}
-                            <p> $ 0.00 </p>
-                            <a class="btn btn-primary" href="{% url 'category' %}">{{ jobs.qualification }} Top-Up Account </a>
-
-                            {% endif %}
-
-                        </div>
-
-                    </div>
-                </div>
-               <a href="{% url 'profile_update' %}" class="btn btn-primary">Edit Profile</a>  
-            </div>
-        </div>
-</div>
-</div>
-</div>  
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="static/lib/wow/wow.min.js"></script>
-    <script src="static/lib/easing/easing.min.js"></script>
-    <script src="static/lib/waypoints/waypoints.min.js"></script>
-    <script src="static/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
 
     <!-- Template Javascript -->
-    <script src="static/js/main.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
